@@ -1,33 +1,70 @@
 ---
 title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+description: 'The MailX API enables email and domain management via RESTful methods.'
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+Welcome to the MailX API reference documentation. Our API follows RESTful principles and uses standard HTTP methods. All endpoints are secured and require authentication.
 
-## Welcome
+## Base URL
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+All API requests should be made to:
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
+```bash
+https://api.mailx.com
+```
+
+## Available Endpoints
+
+Our API is organized around these main resources:
+
+<CardGroup cols={2}>
+  <Card title="Domains" icon="globe">
+    Manage your email domains and DNS settings
+    <br/>
+    `GET /domains`
+  </Card>
+  
+  <Card title="Emails" icon="envelope">
+    Send and manage email communications
+    <br/>
+    `POST /emails`
+  </Card>
+
+  <Card title="Mailboxes" icon="inbox">
+    Create and manage email mailboxes
+    <br/>
+    `GET, POST /mailboxes`
+  </Card>
+
+  <Card title="Messages" icon="message">
+    Track and manage individual messages
+    <br/>
+    `GET /messages`
+  </Card>
+</CardGroup>
+
+## Security
+
+<Card title="Authentication" icon="lock" href="/api-reference/authentication">
+  Learn how to authenticate your requests and manage API keys securely
 </Card>
 
-## Authentication
+## Response Format
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+All responses are returned in JSON format. Successful responses will have a 2xx status code.
+
+## Error Handling
+
+Error responses include helpful messages and appropriate HTTP status codes:
 
 ```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+{
+  "statusCode": "4xx, 5xx",
+  "error": "HTTP Error name",
+  "message": "Human readable error message"
+}
 ```
+
+<Note>
+Explore each section in the sidebar to find detailed documentation for specific endpoints
+</Note>

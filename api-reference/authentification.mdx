@@ -1,0 +1,79 @@
+---
+title: 'Authentication'
+description: 'Learn how to authenticate with the MailX API'
+---
+
+The MailX API uses API keys to secure all requests. Each request must include your API key in the Authorization header.
+
+## API Keys
+
+### Overview
+
+API keys are unique identifiers that authenticate your requests to the MailX API. Each key has specific permissions and can be restricted to certain endpoints.
+
+### Obtaining an API Key
+
+1. Log in to your MailX Dashboard
+2. Navigate to API Keys
+3. Click "Create API Key"
+4. Set permissions and restrictions for the key
+5. Save and copy your new API key
+
+<Warning>
+API keys are only displayed once at creation time. Store them securely as you won't be able to view them again.
+</Warning>
+
+## Making Authenticated Requests
+
+### API Key Format
+
+Your API key will look like this:
+```bash
+mailx_abcdef1234567890
+```
+
+Add your API key to requests using the Authorization header:
+
+```bash
+Authorization: mailx_abcdef1234567890
+```
+
+### Example Request
+
+```bash
+curl -X GET "https://api.mailx.tech/domains" \
+     -H "Authorization: mailx_abcdef1234567890" \
+     -H "Content-Type: application/json"
+```
+
+## Security Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Secure Storage" icon="shield">
+    Never store API keys in your codebase or version control
+  </Card>
+  
+  <Card title="Key Rotation" icon="rotate">
+    Regularly rotate your API keys to minimize security risks
+  </Card>
+
+  <Card title="Access Control" icon="lock">
+    Use the principle of least privilege when assigning key permissions
+  </Card>
+
+  <Card title="Environment Variables" icon="gear">
+    Store API keys as environment variables in your application
+  </Card>
+</CardGroup>
+
+## Rate Limiting
+
+API keys are subject to rate limiting:
+
+- Free tier: 100 requests/minute
+- Pro tier: 1000 requests/minute
+- Enterprise tier: Custom limits
+
+<Note>
+Rate limit information is included in the response headers of each request.
+</Note>

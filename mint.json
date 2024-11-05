@@ -2,10 +2,6 @@
     "$schema": "https://mintlify.com/schema.json",
     "name": "MailX",
     "theme": "prism",
-    "logo": {
-        "dark": "/logo/dark.svg",
-        "light": "/logo/light.svg"
-    },
     "favicon": "/favicon.svg",
     "colors": {
         "primary": "#5D4CFE",
@@ -16,49 +12,56 @@
         "name": "Dashboard",
         "url": "https://mailx.tech"
     },
+    "anchors": [
+        {
+            "name": "Documentation",
+            "icon": "code",
+            "url": "essentials"
+        },
+        {
+            "name": "API References",
+            "icon": "globe",
+            "url": "api-reference"
+        }
+    ],
     "navigation": [
         {
-            "group": "",
+            "group": "Documentation",
             "pages": [
-                "introduction",
-                "quickstart",
-                "development"
+                "introduction"
             ]
         },
         {
-            "group": "API Documentation",
+            "group": "API Reference",
             "pages": [
-                "api-reference/introduction"
+                "api-reference/introduction",
+                "api-reference/authentification"
             ]
         },
         {
-            "group": "Endpoints",
+            "group": "Domains",
             "pages": [
+                "api-reference/domains/list"
+            ]
+        },
+        {
+            "group": "Emails",
+            "pages": [
+                "api-reference/emails/send"
+            ]
+        },
+        {
+            "group": "Mailboxes",
+            "pages": [
+                "api-reference/mailboxes/create",
+                "api-reference/mailboxes/get",
+                "api-reference/mailboxes/list",
+                "api-reference/mailboxes/delete",
                 {
-                    "group": "Domains",
+                    "group": "Messages",
                     "pages": [
-                        "api-reference/domains/list"
-                    ]
-                },
-                {
-                    "group": "Emails",
-                    "pages": [
-                        "api-reference/emails/send"
-                    ]
-                },
-                {
-                    "group": "Mailboxes",
-                    "pages": [
-                        "api-reference/mailboxes/list",
-                        "api-reference/mailboxes/create",
-                        "api-reference/mailboxes/get",
-                        {
-                            "group": "Messages",
-                            "pages": [
-                                "api-reference/mailboxes/messages/list",
-                                "api-reference/mailboxes/messages/get"
-                            ]
-                        }
+                        "api-reference/mailboxes/messages/list",
+                        "api-reference/mailboxes/messages/get"
                     ]
                 }
             ]
