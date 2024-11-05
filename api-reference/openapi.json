@@ -1,195 +1,594 @@
 {
-  "openapi": "3.0.1",
-  "info": {
-    "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
-    "license": {
-      "name": "MIT"
-    },
-    "version": "1.0.0"
-  },
-  "servers": [
-    {
-      "url": "http://sandbox.mintlify.com"
-    }
-  ],
-  "security": [
-    {
-      "bearerAuth": []
-    }
-  ],
-  "paths": {
-    "/plants": {
-      "get": {
-        "description": "Returns all plants from the system that the user has access to",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Plant response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Plant"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "description": "Creates a new plant in the store",
-        "requestBody": {
-          "description": "Plant to add to the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewPlant"
-              }
-            }
-          },
-          "required": true
+    "openapi": "3.0.1",
+    "info": {
+        "title": "OpenAPI Plant Store",
+        "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
+        "license": {
+            "name": "MIT"
         },
-        "responses": {
-          "200": {
-            "description": "plant response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Plant"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
+        "version": "1.0.0"
     },
-    "/plants/{id}": {
-      "delete": {
-        "description": "Deletes a single plant based on the ID supplied",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of plant to delete",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Plant deleted",
-            "content": {}
-          },
-          "400": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
+    "servers": [
+        {
+            "url": "https://api.mailx.tech"
+        }
+    ],
+    "security": [
+        {
+            "apiKeyAuth": []
+        }
+    ],
+    "paths": {
+        "/domains": {
+            "get": {
+                "description": "Returns all domains from your account",
+                "responses": {
+                    "200": {
+                        "description": "Domain response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Domain"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    }
                 }
-              }
             }
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "Plant": {
-        "required": [
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "description": "The name of the plant",
-            "type": "string"
-          },
-          "tag": {
-            "description": "Tag to specify the type",
-            "type": "string"
-          }
-        }
-      },
-      "NewPlant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Plant"
-          },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
-              }
+        },
+        "/emails": {
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "sender": {
+                                        "type": "string",
+                                        "description": "The email sender, `Tom <tom@example.com>` or `tom@example.com`",
+                                        "example": "Tom <tom@example.com>"
+                                    },
+                                    "recipient": {
+                                        "type": "string",
+                                        "description": "The email recipient",
+                                        "example": "lucas@example.com"
+                                    },
+                                    "subject": {
+                                        "type": "string",
+                                        "description": "The email subject",
+                                        "example": "Catching Up and Weekend Plans!"
+                                    },
+                                    "text": {
+                                        "type": "string",
+                                        "description": "The email text",
+                                        "example": "Hey Lucas, Hope you are doing well! It has been a while since we last caught up..."
+                                    },
+                                    "html": {
+                                        "type": "string",
+                                        "description": "The email html",
+                                        "example": "Hey <b>Lucas</b>, Hope you are doing <u>well<u/>! It has been a while since we last caught up..."
+                                    },
+                                    "delay": {
+                                        "type": "number",
+                                        "description": "The send delay in seconds. _(email will be send after this delay)_",
+                                        "example": 120
+                                    }
+                                },
+                                "required": [
+                                    "sender",
+                                    "recipient"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Email Create response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EmailCreate"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    }
+                }
             }
-          }
-        ]
-      },
-      "Error": {
-        "required": [
-          "error",
-          "message"
-        ],
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "message": {
-            "type": "string"
-          }
+        },
+        "/mailboxes": {
+            "get": {
+                "description": "Returns all mailboxes from your account",
+                "responses": {
+                    "200": {
+                        "description": "Mailbox response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Mailbox"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "description": "The mailbox email",
+                                        "example": "tom@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "The mailbox password",
+                                        "example": "password123",
+                                        "default": "generated by the server"
+                                    }
+                                },
+                                "required": [
+                                    "domain",
+                                    "username"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Mailbox Create response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MailboxCreate"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/mailboxes/{mailboxId}": {
+            "get": {
+                "description": "Return a mailbox by it's id",
+                "parameters": [
+                    {
+                        "name": "mailboxId",
+                        "in": "path",
+                        "required": true,
+                        "description": "The mailbox ID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Mailbox response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Mailbox"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/mailboxes/{mailboxId}/messages": {
+            "get": {
+                "description": "Returns the mailbox messages",
+                "parameters": [
+                    {
+                        "name": "mailboxId",
+                        "in": "path",
+                        "required": true,
+                        "description": "The mailbox ID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Message response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Message"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/mailboxes/{mailboxId}/messages/{messageId}": {
+            "get": {
+                "description": "Return a mailbox message",
+                "parameters": [
+                    {
+                        "name": "mailboxId",
+                        "in": "path",
+                        "required": true,
+                        "description": "The mailbox ID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "messageId",
+                        "in": "path",
+                        "required": true,
+                        "description": "The message ID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Message response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Message"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-      }
     },
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
-      }
+    "components": {
+        "schemas": {
+            "Domain": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "The id of the domain",
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "description": "The creation timestamp of the domain",
+                        "type": "number"
+                    },
+                    "hostname": {
+                        "description": "The hostname of the domain",
+                        "type": "string"
+                    },
+                    "status": {
+                        "description": "The status of the domain",
+                        "type": "string",
+                        "enum": [
+                            "active",
+                            "pending",
+                            "inactive"
+                        ]
+                    }
+                },
+                "example": {
+                    "id": "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx",
+                    "createdAt": 1720000000,
+                    "hostname": "example.com",
+                    "status": "active"
+                }
+            },
+            "Mailbox": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "The mailbox id",
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "description": "The creation timestamp of the mailbox",
+                        "type": "number"
+                    },
+                    "email": {
+                        "description": "The email of the mailbox",
+                        "type": "string"
+                    },
+                    "messages": {
+                        "description": "The messages count",
+                        "type": "number"
+                    },
+                    "unread": {
+                        "description": "The unread messages count",
+                        "type": "number"
+                    }
+                },
+                "example": {
+                    "id": "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx",
+                    "createdAt": 1720000000,
+                    "email": "tom@example.com",
+                    "messages": 10,
+                    "unread": 3
+                }
+            },
+            "MailboxCreate": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "The mailbox ID",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "The mailbox email",
+                        "type": "string"
+                    },
+                    "password": {
+                        "description": "The mailbox password",
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "id": "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx",
+                    "createdAt": 1720000000,
+                    "email": "tom@example.com",
+                    "messages": 10,
+                    "unread": 3
+                }
+            },
+            "Message": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "The message id",
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "description": "The message creation timestamp",
+                        "type": "number"
+                    },
+                    "from": {
+                        "description": "The message sender email",
+                        "type": "string"
+                    },
+                    "subject": {
+                        "description": "The message subject",
+                        "type": "string"
+                    },
+                    "text": {
+                        "description": "The message text",
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "id": "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx",
+                    "createdAt": 1720000000,
+                    "from": "lucas@example.com",
+                    "recipient": "tom@example.com",
+                    "subject": "Hey Tom,",
+                    "text": "Hope you're doing well! It's been a while sinc..."
+                }
+            },
+            "EmailCreate": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "The email id",
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "id": "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
+                }
+            },
+            "Error400": {
+                "required": [
+                    "statusCode",
+                    "error",
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "statusCode": {
+                        "type": "number"
+                    },
+                    "error": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "statusCode": 400,
+                    "error": "Bad Request",
+                    "message": "Bad Request"
+                }
+            },
+            "Error401": {
+                "required": [
+                    "statusCode",
+                    "error",
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "statusCode": {
+                        "type": "number"
+                    },
+                    "error": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "statusCode": 401,
+                    "error": "Unauthorized",
+                    "message": "Unauthorized"
+                }
+            }
+        },
+        "securitySchemes": {
+            "apiKeyAuth": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "Authorization"
+            }
+        }
     }
-  }
 }

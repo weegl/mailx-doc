@@ -1,45 +1,39 @@
 ---
-title: Introduction
-description: 'Welcome to the home of your new documentation'
+title: Prism — The Gradient Theme
+sidebarTitle: Introduction
+description: Start building awesome documentation in under five minutes with the Prism theme.
+icon: house
+mode: wide
 ---
 
-<img
-  className="block dark:hidden"
-  src="/images/hero-light.svg"
-  alt="Hero Light"
-/>
-<img
-  className="hidden dark:block"
-  src="/images/hero-dark.svg"
-  alt="Hero Dark"
-/>
+import { StartButton, HeroCard, Banner } from '/snippets/components.mdx';
 
-## Setting up
+<StartButton />
 
-The first step to world-class documentation is setting up your editing environments.
+<br />
 
-<CardGroup cols={2}>
-  <Card
-    title="Edit Your Docs"
-    icon="pen-to-square"
-    href="https://mintlify.com/docs/quickstart"
-  >
-    Get your docs set up locally for easy development
-  </Card>
-  <Card
-    title="Preview Changes"
-    icon="image"
-    href="https://mintlify.com/docs/development"
-  >
-    Preview your changes before you push to make sure they're perfect
-  </Card>
+<br />
+
+<CardGroup>
+  <HeroCard
+    img="https://raw.githubusercontent.com/mintlify/themes/main/prism/images/setting-up.svg"
+    title="Setting up your docs"
+    description="Everything you need to know about the doc setup process, from start to finish"
+    href="/quickstart"
+  />
+  <HeroCard
+    img="https://raw.githubusercontent.com/mintlify/themes/main/prism/images/themes.svg"
+    title="Explore themes"
+    description="Explore a variety of themes you can use to spice up the look and feel of your documentation"
+    href="/quickstart"
+  />
 </CardGroup>
 
 ## Make it yours
 
 Update your docs to your brand and add valuable content for the best user conversion.
 
-<CardGroup cols={2}>
+<CardGroup cols={3}>
   <Card
     title="Customize Style"
     icon="palette"
@@ -61,11 +55,9 @@ Update your docs to your brand and add valuable content for the best user conver
   >
     Build interactive features and designs to guide your users
   </Card>
-  <Card
-    title="Get Inspiration"
-    icon="stars"
-    href="https://mintlify.com/customers"
-  >
-    Check out our showcase of our favorite documentation
-  </Card>
 </CardGroup>
+
+<br />
+<br />
+
+<Banner />
